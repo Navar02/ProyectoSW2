@@ -1,6 +1,7 @@
 import { folder, leftArrow } from "./fragments.js";
 import { fetchJSON } from "./loaders.js";
 import { setupRows } from "./rows.js"
+import { autocomplete } from "./autocomplete.js"
 
 function differenceInDays(date1) {
   // YOUR CODE HERE
@@ -35,6 +36,7 @@ function getSolution(players, solutionArray, difference_In_Days) {
   //En el caso de que la diferencia de dias sea mayor que el número de elementos de solution.json se vuelve a empezar (evitamos nullPointerException)
   while (longitudSolutionJSON <= difference_In_Days) {
     difference_In_Days -= longitudSolutionJSON
+    //console.log(difference_In_Days)
   }
   return players.filter(e=> e.id == solutionArray[difference_In_Days].id)
 }
@@ -52,24 +54,25 @@ Promise.all([fetchJSON("fullplayers"), fetchJSON("solution")]).then(
 
     document.getElementById(
       "mistery"
-    ).src = `https://playfootball.games/media/players/${game.solution.id % 32
-    }/${game.solution.id}.png`;
+    ).src = `https://playfootball.games/media/players/${game.solution.map(e=>e.id) % 32
+    }/${game.solution.map(e=>e.id)}.png`;
 
-    // YOUR CODE HERE
-    let addRow = setupRows( game );
-    // get myInput object...
-    let boton = document.getElementById("myInput")
-    // when the user types a number an press the Enter key:
-    let idPlayer
-    boton.addEventListener("keydown", e => {
-      if (e.keyCode == 13 && boton.value != "")
-        idPlayer = boton.value
-        console.log(boton.value)
-    })
+    // // YOUR CODE HERE
+    // //game.guesses = 
+    // let addRow = setupRows( game );
+    // // get myInput object...
+    // let boton = document.getElementById("myInput")
+    // // when the user types a number an press the Enter key:
+    // let idPlayer
+    // boton.addEventListener("keydown", e => {
+    //   if (e.keyCode == 13 && boton.value != ""){
+    //     /* the ID of the player, where is it? */
+    //     idPlayer = boton.value
+    //     //console.log(boton.value)
+    //     addRow(idPlayer)
+    //   }
+    // })
 
-    /* the ID of the player, where is it? */
-    //console.log(game.solution.map(r=>r.id).join())
-    addRow(idPlayer);
-    //
+    autocomplete(document.getElementById("myInput"), game)
   }
 );
