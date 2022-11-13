@@ -58,7 +58,12 @@ let setupRows = function (game) {
         let rdo = ""
         switch (theKey) {
             case "birthdate":
-                let diff = new Date(jugador.map(e => e[theKey])) - new Date(theValue)
+                let diff = new Date(jugador.map(e => e[theKey])[0]) - new Date(theValue[0])
+                if(diff<31536000000){
+                    diff=0
+                }
+                console.log(diff)
+                console.log(diff == 0)
                 if (diff == 0) {
                     rdo = "correct"
                 } else if (diff > 0) {
