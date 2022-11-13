@@ -54,6 +54,7 @@ let setupRows = function (game) {
     let check = function (theKey, theValue) {
         // YOUR CODE HERE
         let jugador = game.solution
+
         let rdo = ""
         switch (theKey) {
             case "birthdate":
@@ -66,7 +67,10 @@ let setupRows = function (game) {
                 break
 
             default:
-                if (jugador.map(e => e[theKey]) == theValue) {
+                //console.log(jugador)
+                console.log(jugador.map(e => e[theKey])[0])
+                console.log(theValue)
+                if (jugador.map(e => e[theKey])[0]== theValue[0]) {
                     rdo = "correct"
                 } else rdo = "incorrect"
                 break
@@ -116,7 +120,7 @@ let setupRows = function (game) {
         for (let j = 0; j < content.length; j++) {
             s = "".concat(((j + 1) * delay).toString(), "ms")
             fragments += `<div class="w-1/5 shrink-0 flex justify-center ">
-                            <div class="mx-1 overflow-hidden w-full max-w-2 shadowed font-bold text-xl flex aspect-square rounded-full justify-center items-center bg-slate-400 text-white ${check(attribs[j], guess[attribs[j]]) == 'correct' ? 'bg-green-500' : ''} opacity-0 fadeInDown" style="max-width: 60px; animation-delay: ${s};">
+                            <div class="mx-1 overflow-hidden w-full max-w-2 shadowed font-bold text-xl flex aspect-square rounded-full justify-center items-center bg-slate-400 text-white ${check(attribs[j], guess.map(e => e[attribs[j]])) == 'correct' ? 'bg-green-500' : ''} opacity-0 fadeInDown" style="max-width: 60px; animation-delay: ${s};">
                                 ${content[j]}
                             </div>
                          </div>`
